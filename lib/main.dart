@@ -7,7 +7,7 @@ import 'core/helper_method.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  CacheHelper.clear();
+  // CacheHelper.clear();
 
   runApp(const MyApp());
 }
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       // splitScreenMode: true,
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: ' ECO',
+        title: 'ECO',
         navigatorKey: navigatorKey,
         // You can use the library anywhere in the app even in theme
         theme: ThemeData(

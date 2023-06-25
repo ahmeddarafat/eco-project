@@ -1,23 +1,171 @@
-import 'package:eco_project/core/cache_helper.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+import 'package:eco_project/core/cache_helper.dart';
+import 'package:eco_project/core/helper_method.dart';
+import 'package:eco_project/data/model/request_models.dart';
+import 'package:eco_project/presentation/screens/confirm/confirmation/view.dart';
+import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+
+import '../../../../data/data_source/api_service.dart';
+import '../../../../data/network/network_info.dart';
+import '../../../../data/repository/repository.dart';
+import 'confrimation.dart';
+
+class Promocode extends StatefulWidget {
+  final bool showDialog;
+  const Promocode({
     super.key,
+    this.showDialog = false,
   });
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Promocode> createState() => _PromocodeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PromocodeState extends State<Promocode> {
+  final Repository _repo = RepositoryImpl(
+    apiService: ApiService(),
+    networkInfo: NetworkInfoImpl(InternetConnectionChecker()),
+  );
+
+  late final TextEditingController _promoCodeController;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+
   String userName = "";
   int points = 0;
+
   @override
   void initState() {
     super.initState();
+
+    _promoCodeController = TextEditingController();
+
     userName = CacheHelper.getName();
     points = CacheHelper.getCounter();
+
+    Future.delayed(
+      Duration.zero,
+      () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text("Promo Code",
+                        style:
+                            TextStyle(fontSize: 20, color: Color(0xff1E1E1E))),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                        "Type in ECO’s promo code and collect your points",
+                        style:
+                            TextStyle(fontSize: 11, color: Color(0xff969796))),
+                    const SizedBox(
+                      height: 28,
+                    ),
+                    TextFormField(
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: "app.Recipe.co/jollof_rice",
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xff9DD549),
+                          ),
+                        ),
+                      ),
+                      controller: _promoCodeController,
+                      validator: (code) {
+                        if (code!.isEmpty) {
+                          return "Please, Enter the promo code";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          final request = PromoCodeRequestModel(
+                            promoCode: _promoCodeController.text,
+                            token: CacheHelper.getToken(),
+                          );
+                          _repo.promoCode(request).then(
+                            (value) {
+                              value.fold(
+                                (failure) {
+                                  log("failure");
+                                  final snackBar = SnackBar(
+                                    content: Text(failure.message),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                },
+                                (responseModel) {
+                                  log("success");
+                                  if (responseModel.fail != null) {
+                                    String errorMessage = "The code is wrong";
+                                    SnackBar snackBar = SnackBar(
+                                      content: Text(errorMessage),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  } else {
+                                    CacheHelper.saveCounter(
+                                      (int.parse(responseModel.points ?? "0") +
+                                          CacheHelper.getCounter()),
+                                    );
+                                    navigateTo(page: const ConfirmationCode());
+                                  }
+                                },
+                              );
+                            },
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(170, 50),
+                          backgroundColor: const Color(0xff9DD549),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      child: const Text(
+                        "Earn now",
+                        style: TextStyle(
+                          color: Color(0xffFFFFFF),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _promoCodeController.dispose();
+    super.dispose();
   }
 
   @override

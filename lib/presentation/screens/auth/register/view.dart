@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import '../../../../core/cache_helper.dart';
 import '../../../../data/data_source/api_service.dart';
 import '../../../../data/model/request_models.dart';
 import '../../../../data/network/network_info.dart';
@@ -233,14 +234,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               },
-                              (r) {
-                                if (r.fail != null) {
+                              (responseModel) {
+                                if (responseModel.fail != null) {
                                   final snackBar = SnackBar(
-                                    content: Text(r.fail!),
+                                    content: Text(responseModel.fail!),
                                   );
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
                                 } else {
+                                  CacheHelper.saveName(_nameController.text);
+                                  CacheHelper.saveToken(
+                                      responseModel.token ?? "");
                                   navigateTo(
                                       page: const HomeView(),
                                       withHistory: false);

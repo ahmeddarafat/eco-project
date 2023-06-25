@@ -1,3 +1,5 @@
+import 'package:eco_project/core/cache_helper.dart';
+
 import '../../../../core/helper_method.dart';
 import '../register/view.dart';
 import '../../home/view.dart';
@@ -134,8 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: (password) {
                         if (password!.isEmpty) {
                           return "Please, Enter your password";
-                        }
-                        else if(password.length < 6){
+                        } else if (password.length < 6) {
                           return "Short password";
                         }
                         return null;
@@ -157,8 +158,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             password: _passwordController.text,
                           );
                           _repo.login(request).then(
-                            (value) {
-                              value.fold(
+                            (response) {
+                              response.fold(
                                 (failure) {
                                   final snackBar = SnackBar(
                                     content: Text(failure.message),
@@ -166,14 +167,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
                                 },
-                                (r) {
-                                  if (r.fail != null) {
+                                (responseModel) {
+                                  if (responseModel.fail != null) {
                                     final snackBar = SnackBar(
-                                      content: Text(r.fail!),
+                                      content: Text(responseModel.fail!),
                                     );
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   } else {
+                                    CacheHelper.saveName(
+                                        responseModel.name ?? "");
+                                    CacheHelper.saveToken(
+                                        responseModel.token ?? "");
                                     navigateTo(
                                         page: const HomeView(),
                                         withHistory: false);

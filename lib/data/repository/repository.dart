@@ -14,6 +14,7 @@ abstract class Repository {
   Future<Either<Failure, ResponseModel>> forgotPass(
       ForgotPassRequestModel data);
   Future<Either<Failure, ResponseModel>> resetPass(ResetPassRequestModel data);
+  Future<Either<Failure, ResponseModel>> promoCode(PromoCodeRequestModel data);
 }
 
 class RepositoryImpl implements Repository {
@@ -75,6 +76,21 @@ class RepositoryImpl implements Repository {
     if (await _networkInfo.isConnected) {
       final response = await _apiService.postData(
         endPoint: DataConstants.resetPassword,
+        data: data.toJson(),
+      );
+      log(response.data.toString());
+      return Right(ResponseModel.fromJson(response.data));
+    } else {
+      return Left(Failure("Check your network connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ResponseModel>> promoCode(
+      PromoCodeRequestModel data) async {
+    if (await _networkInfo.isConnected) {
+      final response = await _apiService.postData(
+        endPoint: DataConstants.promoCode,
         data: data.toJson(),
       );
       log(response.data.toString());

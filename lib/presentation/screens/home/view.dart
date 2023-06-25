@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'promo_code/promo_code.dart';
 import 'home/view.dart';
 import 'map/view.dart';
 import 'notifications/view.dart';
@@ -16,6 +17,7 @@ class _HomeViewState extends State<HomeView> {
   final pages = [
     const HomePage(),
     const SettingPage(),
+    const Promocode(),
     const Notificationspadg(),
     const MapPage(),
   ];
@@ -59,6 +61,10 @@ class _HomeViewState extends State<HomeView> {
                   label: ""),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings,
+                      size: 30, color: Colors.white.withOpacity(.8)),
+                  label: ""),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.earbuds,
                       size: 30, color: Colors.white.withOpacity(.8)),
                   label: ""),
               BottomNavigationBarItem(

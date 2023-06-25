@@ -1,23 +1,81 @@
 import 'package:eco_project/core/cache_helper.dart';
+import 'package:eco_project/core/helper_method.dart';
+import 'package:eco_project/presentation/screens/home/view.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+class ConfirmationCode extends StatefulWidget {
+  final bool showDialog;
+  const ConfirmationCode({
     super.key,
+    this.showDialog = false,
   });
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ConfirmationCode> createState() => _ConfirmationCodeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ConfirmationCodeState extends State<ConfirmationCode> {
   String userName = "";
   int points = 0;
+
   @override
   void initState() {
     super.initState();
     userName = CacheHelper.getName();
     points = CacheHelper.getCounter();
+
+    Future.delayed(
+      Duration.zero,
+      () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Column(
+                children: [
+                  Image.asset("assets/images/emogie.png"),
+                  const SizedBox(
+                    height: 32,
+                  ),
+                  const Text(
+                    "Congrats!",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Color(0xff1E1E1E),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  const Text("You earned 100 points with\nyour last recycling.",
+                      style: TextStyle(fontSize: 15, color: Color(0xff969796))),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      navigateTo(page: const HomeView());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(231, 56),
+                      backgroundColor: const Color(0xff9DD549),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      "Back To Home",
+                      style: TextStyle(color: Color(0xffFFFFFF)),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override

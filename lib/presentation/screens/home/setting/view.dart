@@ -1,3 +1,5 @@
+import 'package:eco_project/core/cache_helper.dart';
+
 import '../../../../core/helper_method.dart';
 import '../../auth/login/view.dart';
 import 'package:flutter/material.dart';
@@ -265,7 +267,8 @@ class SettingPage extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 140, top: 5),
                 child: TextButton(
                   onPressed: () {
-                    navigateTo(page: const LoginScreen(),withHistory: false);
+                    CacheHelper.clear();
+                    navigateTo(page: const LoginScreen(), withHistory: false);
                   },
                   child: const Text(
                     "Log out",

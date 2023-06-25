@@ -3,6 +3,7 @@ class ResponseModel {
   String? fail;
   String? token;
   String? points;
+  String? name;
 
   ResponseModel({this.success, this.fail});
 
@@ -11,6 +12,7 @@ class ResponseModel {
     fail = json['error'];
     token = json['token'];
     points = json['points'];
+    name = json['name'];
   }
 }
 

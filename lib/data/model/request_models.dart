@@ -71,3 +71,20 @@ class ResetPassRequestModel {
     };
   }
 }
+
+class PromoCodeRequestModel {
+  final String token;
+  final String promoCode;
+
+  PromoCodeRequestModel({
+    required this.token,
+    required this.promoCode
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "token": token,
+      "promo_code" :promoCode,
+    };
+  }
+}
