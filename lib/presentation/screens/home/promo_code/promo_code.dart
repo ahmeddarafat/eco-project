@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:eco_project/core/cache_helper.dart';
 import 'package:eco_project/core/helper_method.dart';
 import 'package:eco_project/data/model/request_models.dart';
-import 'package:eco_project/presentation/screens/confirm/confirmation/view.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -42,7 +41,7 @@ class _PromocodeState extends State<Promocode> {
     _promoCodeController = TextEditingController();
 
     userName = CacheHelper.getName();
-    points = CacheHelper.getCounter();
+    points = CacheHelper.getPoints();
 
     Future.delayed(
       Duration.zero,
@@ -128,9 +127,12 @@ class _PromocodeState extends State<Promocode> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   } else {
-                                    CacheHelper.saveCounter(
+                                    CacheHelper.savePoints(
                                       (int.parse(responseModel.points ?? "0") +
-                                          CacheHelper.getCounter()),
+                                          CacheHelper.getPoints()),
+                                    );
+                                    CacheHelper.savecounter(
+                                      (CacheHelper.getcounter() + 1),
                                     );
                                     navigateTo(page: const ConfirmationCode());
                                   }

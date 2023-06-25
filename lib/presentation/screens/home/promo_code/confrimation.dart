@@ -22,7 +22,7 @@ class _ConfirmationCodeState extends State<ConfirmationCode> {
   void initState() {
     super.initState();
     userName = CacheHelper.getName();
-    points = CacheHelper.getCounter();
+    points = CacheHelper.getPoints();
 
     Future.delayed(
       Duration.zero,

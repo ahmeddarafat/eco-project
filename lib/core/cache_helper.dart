@@ -27,13 +27,23 @@ class CacheHelper {
     return prefs.getString("name") ?? "";
   }
 
-  /// counter
+  /// points
 
-  static Future<bool> saveCounter(int count) async {
-    return await prefs.setInt('counter', count);
+  static Future<bool> savePoints(int points) async {
+    return await prefs.setInt('points', points);
   }
 
-  static int getCounter() {
+  static int getPoints() {
+    return prefs.getInt("points") ?? 0;
+  }
+
+  /// counter
+
+  static Future<bool> savecounter(int counter) async {
+    return await prefs.setInt('counter', counter);
+  }
+
+  static int getcounter() {
     return prefs.getInt("counter") ?? 0;
   }
 

@@ -13,11 +13,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String userName = "";
   int points = 0;
+  int counter = 0;
   @override
   void initState() {
     super.initState();
     userName = CacheHelper.getName();
-    points = CacheHelper.getCounter();
+    points = CacheHelper.getPoints();
+    counter = CacheHelper.getcounter();
   }
 
   @override
@@ -92,8 +94,8 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(
                               height: 2,
                             ),
-                            const Text("222",
-                                style: TextStyle(
+                            Text(points.toString(),
+                                style: const TextStyle(
                                     color: Color(0xffFFFFFF), fontSize: 20)),
                             const SizedBox(
                               height: 4,
@@ -172,8 +174,8 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(
                               height: 2,
                             ),
-                            const Text("000",
-                                style: TextStyle(
+                            Text(counter.toString(),
+                                style: const TextStyle(
                                     color: Color(0xffFFFFFF), fontSize: 20)),
                             const SizedBox(
                               height: 4,
