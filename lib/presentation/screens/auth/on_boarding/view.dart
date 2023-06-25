@@ -1,5 +1,5 @@
-import 'package:eco_project/core/helper_method.dart';
-import 'package:eco_project/presentation/screens/auth/login/view.dart';
+import '../../../../core/helper_method.dart';
+import '../login/view.dart';
 import 'package:flutter/material.dart';
 import 'controller.dart';
 

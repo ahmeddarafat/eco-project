@@ -1,6 +1,6 @@
-import 'package:eco_project/core/helper_method.dart';
-import 'package:eco_project/presentation/screens/auth/register/view.dart';
-import 'package:eco_project/presentation/screens/home/view.dart';
+import '../../../../core/helper_method.dart';
+import '../register/view.dart';
+import '../../home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';

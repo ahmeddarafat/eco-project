@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:eco_project/data/data_source/api_service.dart';
-import 'package:eco_project/data/model/request_models.dart';
-import 'package:eco_project/data/network/network_info.dart';
-import 'package:eco_project/data/repository/repository.dart';
-import 'package:eco_project/presentation/screens/home/view.dart';
+import '../../../../data/data_source/api_service.dart';
+import '../../../../data/model/request_models.dart';
+import '../../../../data/network/network_info.dart';
+import '../../../../data/repository/repository.dart';
+import '../../home/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';

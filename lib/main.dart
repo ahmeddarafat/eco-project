@@ -1,4 +1,4 @@
-import 'package:eco_project/presentation/screens/auth/splash/view.dart';
+import 'presentation/screens/auth/splash/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/cache_helper.dart';
