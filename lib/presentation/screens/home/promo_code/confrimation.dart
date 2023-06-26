@@ -4,11 +4,8 @@ import 'package:eco_project/presentation/screens/home/view.dart';
 import 'package:flutter/material.dart';
 
 class ConfirmationCode extends StatefulWidget {
-  final bool showDialog;
-  const ConfirmationCode({
-    super.key,
-    this.showDialog = false,
-  });
+  final int currentPoints;
+  const ConfirmationCode({super.key, required this.currentPoints});
 
   @override
   State<ConfirmationCode> createState() => _ConfirmationCodeState();
@@ -48,8 +45,9 @@ class _ConfirmationCodeState extends State<ConfirmationCode> {
                   const SizedBox(
                     height: 8,
                   ),
-                  const Text("You earned 100 points with\nyour last recycling.",
-                      style: TextStyle(fontSize: 15, color: Color(0xff969796))),
+                  Text(
+                      "You earned ${widget.currentPoints} points with\nyour last recycling.",
+                      style: const TextStyle(fontSize: 15, color: Color(0xff969796))),
                   const SizedBox(
                     height: 24,
                   ),

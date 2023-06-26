@@ -48,6 +48,7 @@ class RepositoryImpl implements Repository {
         endPoint: DataConstants.login,
         data: data.toJson(),
       );
+      log("the json is :\n ${data.toJson()}");
       log(response.data.toString());
       return Right(ResponseModel.fromJson(response.data));
     } else {

@@ -83,8 +83,8 @@ class PromoCodeRequestModel {
 
   Map<String, dynamic> toJson() {
     return {
-      "token": token,
       "promo_code" :promoCode,
+      "token": token,
     };
   }
 }

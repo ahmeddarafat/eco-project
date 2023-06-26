@@ -1,3 +1,5 @@
+import 'package:eco_project/core/cache_helper.dart';
+
 import '../../../../data/model/request_models.dart';
 import '../../auth/login/view.dart';
 import 'package:flutter/material.dart';
@@ -199,38 +201,42 @@ class _ResetPasswordState extends State<ResetPassword> {
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        var request = ResetPassRequestModel(
-                          // need to add correct token
-                          token: "e88259c614e91074b76df3bd75c931bc491ee360918ee3850ef5d304b03b6e4d",
-                          email: widget.email,
-                          pass: _passwordController.text,
-                        );
-                        _repo.resetPass(request).then(
-                          (value) {
-                            value.fold(
-                              (failure) {
-                                final snackBar = SnackBar(
-                                  content: Text(failure.message),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                              },
-                              (r) {
-                                if (r.fail != null) {
-                                  final snackBar = SnackBar(
-                                    content: Text(r.fail!),
-                                  );
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                } else {
-                                  navigateTo(
-                                    page: const Confirmation(),
-                                    withHistory: false,
-                                  );
-                                }
-                              },
-                            );
-                          },
+                        // var request = ResetPassRequestModel(
+                        //   // need to add correct token
+                        //   token: CacheHelper.getToken(),
+                        //   email: widget.email,
+                        //   pass: _passwordController.text,
+                        // );
+                        // _repo.resetPass(request).then(
+                        //   (value) {
+                        //     value.fold(
+                        //       (failure) {
+                        //         final snackBar = SnackBar(
+                        //           content: Text(failure.message),
+                        //         );
+                        //         ScaffoldMessenger.of(context)
+                        //             .showSnackBar(snackBar);
+                        //       },
+                        //       (r) {
+                        //         if (r.fail != null) {
+                        //           final snackBar = SnackBar(
+                        //             content: Text(r.fail!),
+                        //           );
+                        //           ScaffoldMessenger.of(context)
+                        //               .showSnackBar(snackBar);
+                        //         } else {
+                        //           navigateTo(
+                        //             page: const Confirmation(),
+                        //             withHistory: false,
+                        //           );
+                        //         }
+                        //       },
+                        //     );
+                        //   },
+                        // );
+                        navigateTo(
+                          page: const Confirmation(),
+                          withHistory: false,
                         );
                       }
                     },

@@ -119,6 +119,9 @@ class _PromocodeState extends State<Promocode> {
                                 },
                                 (responseModel) {
                                   log("success");
+                                  log("the token is : ${CacheHelper.getToken()}");
+                                  log("the code is : ${_promoCodeController.text}");
+                                  log("the Json :\n ${request.toJson()}");
                                   if (responseModel.fail != null) {
                                     String errorMessage = "The code is wrong";
                                     SnackBar snackBar = SnackBar(
@@ -127,14 +130,17 @@ class _PromocodeState extends State<Promocode> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   } else {
+                                    int currentPoints =
+                                        responseModel.points ?? 0;
                                     CacheHelper.savePoints(
-                                      (int.parse(responseModel.points ?? "0") +
-                                          CacheHelper.getPoints()),
+                                      currentPoints + CacheHelper.getPoints(),
                                     );
                                     CacheHelper.savecounter(
                                       (CacheHelper.getcounter() + 1),
                                     );
-                                    navigateTo(page: const ConfirmationCode());
+                                    navigateTo(
+                                        page: ConfirmationCode(
+                                            currentPoints: currentPoints));
                                   }
                                 },
                               );

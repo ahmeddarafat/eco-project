@@ -180,9 +180,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                     CacheHelper.saveToken(
                                         responseModel.token ?? "");
                                     CacheHelper.savePoints(
-                                        int.parse(responseModel.points ?? "0"));
+                                        responseModel.points ?? 0);
                                     CacheHelper.savecounter(
-                                        int.parse(responseModel.points ?? "0"));
+                                        responseModel.points ?? 0);
                                     navigateTo(
                                         page: const HomeView(),
                                         withHistory: false);
